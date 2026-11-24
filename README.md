@@ -46,7 +46,7 @@ npm run test:program   # Rust: settlement math + TS→Rust byte conformance
 | --- | --- | --- |
 | Compiler | 14 unit tests: units, cascade order, constraints, hard bounds, diagnostics with line/column, hash stability, max-size terms | Pass |
 | Rust | 10 math tests (every outcome sums to the vault), 3 conformance tests on bytes produced by the TS compiler | Pass |
-| Program (SBF) | 7 end-to-end tests in LiteSVM: launch with checks + vote + warranty, `<hold>`, funding refund, service fault, lost contest, mint gate rejection, init authority | Pass |
+| Program (SBF) | 7 end-to-end tests in LiteSVM 1.6 (also on GitHub Actions): launch with checks + vote + warranty, `<hold>`, funding refund, service fault, lost contest, mint gate rejection, init authority | Pass |
 | Receipts | 5 tests: build, verify, tamper detection, close-event match, largest contract fits one 1,232-byte transaction | Pass |
 | CLI | Full `<hold>` flow on `solana-test-validator`: deploy, `init-config`, `allow-mint`, `create`, `deposit`, `crank` → payout → close | Pass |
 | IR schema | Example IRs validate under Ajv (draft 2020-12); a tampered IR is rejected | Pass |

@@ -34,15 +34,15 @@ Escrow rent is `(128 + size) × 6,960` lamports and returns to the creator on cl
 
 Account order for each instruction is the field order of its `#[derive(Accounts)]` struct in `src/lib.rs`; `packages/sdk/src/program.ts` builds them in the same order.
 
-### Compute (measured, LiteSVM, peak per instruction)
+### Compute (measured, LiteSVM 1.6, peak per instruction)
 
 | Instruction | CU |
 | --- | --- |
-| create_escrow | 46,443 |
-| close | 31,342 |
-| payout | 14,979 |
-| deposit | 14,667 |
-| allow_mint | 11,621 |
+| create_escrow | 56,943 |
+| close | 32,842 |
+| payout | 18,924 |
+| deposit | 18,905 |
+| allow_mint | 14,621 |
 | init_config | 9,905 |
 | verify | 8,621 |
 | resolve | 7,653 |
