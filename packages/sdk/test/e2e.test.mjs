@@ -2,11 +2,9 @@
 // and contracts written in SolML. Requires target/deploy/solml_escrow.so (cargo-build-sbf).
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, readFileSync, writeSync } from "node:fs";
-const T = (m) => process.env.SOLML_TRACE && writeSync(2, `trace: ${m}\n`);
-T("module loaded");
+import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { Clock, LiteSVM, TransactionMetadata } from "litesvm";
+import { Clock, Svm, TransactionMetadata } from "./svm.mjs";
 import {
   AuthorityType,
   ExtensionType,
@@ -31,10 +29,7 @@ const T0 = 1_800_000_000n;
 const DAY = 86_400n;
 
 function world() {
-  T("world: new LiteSVM");
-  // No transaction history: the tests never look transactions up by signature.
-  const svm = new LiteSVM().withTransactionHistory(0n);
-  T("world: created");
+  const svm = new Svm();
   const admin = Keypair.generate();
   svm.airdrop(admin.publicKey, 100_000_000_000n);
   // Load as an upgradeable program whose upgrade authority is `admin`, so init_config can check it.
@@ -42,9 +37,7 @@ function world() {
   const pid = sdk.PROGRAM_ID;
   const pdata = sdk.programDataAddress(pid);
   const loader = sdk.BPF_UPGRADEABLE_LOADER;
-  T("world: addProgramFromFile");
   svm.addProgramFromFile(pid, SO);
-  T("world: added");
   const progData = Buffer.alloc(4 + 32);
   progData.writeUInt32LE(2, 0);
   pdata.toBuffer().copy(progData, 4);
@@ -67,9 +60,7 @@ function world() {
     data: progData,
     rentEpoch: 0,
   });
-  T("world: setTime");
   setTime(svm, T0);
-  T("world: ready");
   const w = { svm, admin };
   w.send = (ixs, signers) => send(svm, ixs, signers);
   w.fund = (kp) => svm.airdrop(kp.publicKey, 10_000_000_000n);
@@ -87,14 +78,10 @@ function send(svm, ixs, signers) {
   tx.feePayer = signers[0].publicKey;
   tx.add(...ixs);
   tx.sign(...signers);
-  if (process.env.SOLML_TRACE) T("send " + ixs.map((i) => i.programId.toBase58().slice(0, 6) + ":" + i.data.length).join(","));
   const res = svm.sendTransaction(tx);
-  if (process.env.SOLML_TRACE) T("sent " + (res instanceof TransactionMetadata ? "ok" : "failed"));
   svm.expireBlockhash();
   if (!(res instanceof TransactionMetadata)) {
-    if (process.env.SOLML_TRACE) T("reading failure");
     const logs = res.meta().logs();
-    if (process.env.SOLML_TRACE) T("failure logs " + logs.length);
     const err = new Error(`tx failed: ${res.err()}\n${logs.join("\n")}`);
     err.logs = logs;
     throw err;

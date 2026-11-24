@@ -17,7 +17,7 @@ jobs:
     name: program (rust tests + sbf build)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - name: Install Agave toolchain
@@ -38,8 +38,8 @@ jobs:
     needs: program
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -51,9 +51,5 @@ jobs:
       - run: npm run build
       - name: Fixtures are current
         run: npm run fixtures && git diff --exit-code programs/solml_escrow/tests/fixtures
-      - name: LiteSVM probe
-        run: node packages/sdk/test/diag/litesvm-probe.mjs || true
       - name: Tests (compiler unit, SDK receipts, end-to-end on the SBF binary)
-        env:
-          RUST_BACKTRACE: "1"
-        run: npm test || (cd packages/sdk && SOLML_TRACE=1 node test/e2e.test.mjs 2>&1 | grep -E 'trace|^ok|^not ok|bad_alloc|Subtest' | tail -25; exit 1)
+        run: npm test

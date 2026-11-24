@@ -18,7 +18,8 @@
     "@solml/compiler": "0.1.0"
   },
   "devDependencies": {
-    "litesvm": "0.8.0"
+    "litesvm": "1.6.2",
+    "@solana/kit": "^8.0.0"
   },
   "license": "Apache-2.0"
 }
