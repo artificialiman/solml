@@ -142,7 +142,7 @@ solml crank   <escrow> --keypair <anyone.json> --url <rpc>      # after the dead
 
 ## Releases
 
-Publishing a GitHub release, or pushing a `v*` tag, builds the program on Actions and attaches `solml_escrow.so` with its SHA-256 checksum.
+Publishing a GitHub release builds the program on Actions and attaches `solml_escrow.so` with its SHA-256 checksum. [v0.1.0](https://github.com/artificialiman/solml/releases/tag/v0.1.0) is the first.
 
 ## Verification record
 

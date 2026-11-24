@@ -1,11 +1,10 @@
 name: release
 
-# Runs when a release is published on GitHub, or when a v* tag is pushed.
+# Runs when a release is published on GitHub. Publishing creates the tag, so a tag-push
+# trigger would start a second run that races this one for the same asset names.
 on:
   release:
     types: [published]
-  push:
-    tags: ["v*"]
 
 permissions:
   contents: write
@@ -32,9 +31,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.event.release.tag_name || github.ref_name }}
         run: |
-          NOTES="Program ID 3bNY3MoiTTYZMCg3imcHF1UKGuNJ8M2186uSSvMd8SKV. Built with Agave ${AGAVE_VERSION}."
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" target/deploy/solml_escrow.so target/deploy/solml_escrow.so.sha256 --clobber
-          else
-            gh release create "$TAG" target/deploy/solml_escrow.so target/deploy/solml_escrow.so.sha256 --title "$TAG" --notes "$NOTES"
-          fi
+          gh release upload "$TAG" target/deploy/solml_escrow.so target/deploy/solml_escrow.so.sha256 --clobber
