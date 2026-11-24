@@ -1,0 +1,4 @@
+/* Contract sheet: tighter vote, bigger service fault share, airdrop may slip. */
+vote { window: 48h; }
+bond[from=service] { fault-share: 75%; }
+milestone[id=airdrop] { on-deadline-missed: release; }

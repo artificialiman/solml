@@ -1,0 +1,24 @@
+{
+  "name": "@solml/sdk",
+  "version": "0.1.0",
+  "description": "Client SDK for the SolML v1 escrow program: instructions, accounts, events, receipts, CLI",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": { "solml": "dist/cli.js" },
+  "files": ["dist", "src"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@noble/hashes": "^1.8.0",
+    "@solana/spl-token": "^0.4.13",
+    "@solana/web3.js": "^1.98.4",
+    "@solml/compiler": "0.1.0"
+  },
+  "devDependencies": {
+    "litesvm": "0.8.0"
+  },
+  "license": "Apache-2.0"
+}

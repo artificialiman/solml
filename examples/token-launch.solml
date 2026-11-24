@@ -1,0 +1,26 @@
+<!-- Token launch with on-chain checks, one guarantor vote and a warranty hold. -->
+<escrow id="launch-0042" settle="USDC" cluster="devnet">
+  <meta name="title" content="Launch of $GBAGA: mint, pool, airdrop" />
+  <meta name="guarantor" content="wallet:HNsj5CmfrpJUnagwyPYEXA3AFrHc3pumiBVWExJWmCSc" />
+  <meta name="guarantor" content="wallet:Dy29dmYPrLYnGkctQPt39x1aGicdHg4mN9TMK1bgejQ5" />
+  <meta name="guarantor" content="wallet:5XXSejMtDvVydV6E4da8Ba4Sp7Eww8tTQsLvCeWAtnVi" />
+
+  <service wallet="CptS4ujvxsFX4pqZB6XekRSqsDsyi6f1RgSEysLT9c1G" />
+  <client wallet="31CCHqaMqkHnU22qTJdkerwb8FgZFcm3kH1RJPrDbhrz" />
+
+  <deposit from="client" amount="20000 USDC" />
+  <bond from="service" percent="20%" />
+
+  <deliverable>Mint 1,000,000,000 GBAGA with mint and freeze authority revoked.</deliverable>
+  <deliverable>Airdrop to the 5,000 wallets on the agreed list within 21 days.</deliverable>
+
+  <milestone id="mint" weight="40%" deadline="7d">
+    <check mint="CxHuawS9A6mYLy4eVWPZZEdZ85pqwY5ZHtfSgDyqMPq2" mint-authority="revoked" />
+    <check mint="CxHuawS9A6mYLy4eVWPZZEdZ85pqwY5ZHtfSgDyqMPq2" freeze-authority="revoked" />
+    <check mint="CxHuawS9A6mYLy4eVWPZZEdZ85pqwY5ZHtfSgDyqMPq2" mint-supply="1000000000000000" />
+  </milestone>
+  <milestone id="airdrop" weight="60%" deadline="21d" release="vote" />
+
+  <warranty period="30d" hold="10%" />
+  <receipt format="cnft" soulbound="true" />
+</escrow>

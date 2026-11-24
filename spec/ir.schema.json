@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://solml.dev/schema/ir-1.json",
+  "title": "SolML Escrow IR 1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["solml", "id", "cluster", "settle", "parties", "guarantors", "amounts", "rates", "windows", "milestones", "receipt", "info"],
+  "$defs": {
+    "key": { "type": "string", "pattern": "^[1-9A-HJ-NP-Za-km-z]{32,44}$" },
+    "u64": { "type": "string", "pattern": "^(0|[1-9][0-9]{0,19})$" },
+    "bps": { "type": "integer", "minimum": 0, "maximum": 10000 },
+    "u32": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+    "slug": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,31}$" }
+  },
+  "properties": {
+    "solml": { "const": 1 },
+    "id": { "$ref": "#/$defs/slug" },
+    "cluster": { "enum": ["mainnet", "devnet"] },
+    "settle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mint", "decimals", "symbol"],
+      "properties": {
+        "mint": { "$ref": "#/$defs/key" },
+        "decimals": { "type": "integer", "minimum": 0, "maximum": 18 },
+        "symbol": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9]{0,9}$" }
+      }
+    },
+    "parties": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["service", "client"],
+      "properties": { "service": { "$ref": "#/$defs/key" }, "client": { "$ref": "#/$defs/key" } }
+    },
+    "guarantors": { "type": "array", "maxItems": 5, "uniqueItems": true, "items": { "$ref": "#/$defs/key" } },
+    "amounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["price", "serviceBond", "clientBond", "crankTip"],
+      "properties": {
+        "price": { "$ref": "#/$defs/u64" },
+        "serviceBond": { "$ref": "#/$defs/u64" },
+        "clientBond": { "$ref": "#/$defs/u64" },
+        "crankTip": { "$ref": "#/$defs/u64" }
+      }
+    },
+    "rates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["guarantorFee", "serviceFaultShare", "clientFaultShare", "warrantyHold"],
+      "properties": {
+        "guarantorFee": { "type": "integer", "minimum": 0, "maximum": 500 },
+        "serviceFaultShare": { "$ref": "#/$defs/bps" },
+        "clientFaultShare": { "$ref": "#/$defs/bps" },
+        "warrantyHold": { "$ref": "#/$defs/bps" }
+      }
+    },
+    "windows": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["funding", "vote", "contest", "warranty"],
+      "properties": {
+        "funding": { "$ref": "#/$defs/u32" },
+        "vote": { "$ref": "#/$defs/u32" },
+        "contest": { "$ref": "#/$defs/u32" },
+        "warranty": { "$ref": "#/$defs/u32" }
+      }
+    },
+    "milestones": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "weight", "deadline", "release", "onMissed", "checks"],
+        "properties": {
+          "id": { "$ref": "#/$defs/slug" },
+          "weight": { "type": "integer", "minimum": 1, "maximum": 10000 },
+          "deadline": { "type": "integer", "minimum": 1, "maximum": 4294967295 },
+          "release": { "enum": ["deadline", "checks", "vote", "checks+vote"] },
+          "onMissed": { "enum": ["service-fault", "release"] },
+          "checks": {
+            "type": "array",
+            "maxItems": 6,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kind", "mint", "value"],
+              "properties": {
+                "kind": { "enum": ["mint-authority-revoked", "freeze-authority-revoked", "mint-supply"] },
+                "mint": { "$ref": "#/$defs/key" },
+                "value": { "$ref": "#/$defs/u64" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["format", "soulbound"],
+      "properties": { "format": { "const": "cnft" }, "soulbound": { "const": true } }
+    },
+    "info": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "deliverables"],
+      "properties": {
+        "title": { "type": "string", "maxLength": 120 },
+        "deliverables": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    }
+  }
+}

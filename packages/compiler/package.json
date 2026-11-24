@@ -1,0 +1,16 @@
+{
+  "name": "@solml/compiler",
+  "version": "0.1.0",
+  "description": "SolML + SSS compiler: escrow contracts to canonical IR and on-chain terms",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": { "solmlc": "dist/cli.js" },
+  "files": ["dist", "src"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test test/*.test.mjs"
+  },
+  "dependencies": { "@noble/hashes": "^1.8.0" },
+  "license": "Apache-2.0"
+}

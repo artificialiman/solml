@@ -1,0 +1,82 @@
+{
+  "solml": 1,
+  "id": "launch-0042",
+  "cluster": "devnet",
+  "settle": {
+    "mint": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+    "decimals": 6,
+    "symbol": "USDC"
+  },
+  "parties": {
+    "service": "CptS4ujvxsFX4pqZB6XekRSqsDsyi6f1RgSEysLT9c1G",
+    "client": "31CCHqaMqkHnU22qTJdkerwb8FgZFcm3kH1RJPrDbhrz"
+  },
+  "guarantors": [
+    "HNsj5CmfrpJUnagwyPYEXA3AFrHc3pumiBVWExJWmCSc",
+    "Dy29dmYPrLYnGkctQPt39x1aGicdHg4mN9TMK1bgejQ5",
+    "5XXSejMtDvVydV6E4da8Ba4Sp7Eww8tTQsLvCeWAtnVi"
+  ],
+  "amounts": {
+    "price": "20000000000",
+    "serviceBond": "4000000000",
+    "clientBond": "1000000000",
+    "crankTip": "20000"
+  },
+  "rates": {
+    "guarantorFee": 100,
+    "serviceFaultShare": 7500,
+    "clientFaultShare": 5000,
+    "warrantyHold": 1000
+  },
+  "windows": {
+    "funding": 604800,
+    "vote": 172800,
+    "contest": 172800,
+    "warranty": 2592000
+  },
+  "milestones": [
+    {
+      "id": "mint",
+      "weight": 4000,
+      "deadline": 604800,
+      "release": "checks",
+      "onMissed": "service-fault",
+      "checks": [
+        {
+          "kind": "mint-authority-revoked",
+          "mint": "CxHuawS9A6mYLy4eVWPZZEdZ85pqwY5ZHtfSgDyqMPq2",
+          "value": "0"
+        },
+        {
+          "kind": "freeze-authority-revoked",
+          "mint": "CxHuawS9A6mYLy4eVWPZZEdZ85pqwY5ZHtfSgDyqMPq2",
+          "value": "0"
+        },
+        {
+          "kind": "mint-supply",
+          "mint": "CxHuawS9A6mYLy4eVWPZZEdZ85pqwY5ZHtfSgDyqMPq2",
+          "value": "1000000000000000"
+        }
+      ]
+    },
+    {
+      "id": "airdrop",
+      "weight": 6000,
+      "deadline": 1814400,
+      "release": "vote",
+      "onMissed": "release",
+      "checks": []
+    }
+  ],
+  "receipt": {
+    "format": "cnft",
+    "soulbound": true
+  },
+  "info": {
+    "title": "Launch of $GBAGA: mint, pool, airdrop",
+    "deliverables": [
+      "Mint 1,000,000,000 GBAGA with mint and freeze authority revoked.",
+      "Airdrop to the 5,000 wallets on the agreed list within 21 days."
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "solml": 1,
+  "id": "pay-dev-0001",
+  "cluster": "devnet",
+  "settle": {
+    "mint": "CxHuawS9A6mYLy4eVWPZZEdZ85pqwY5ZHtfSgDyqMPq2",
+    "decimals": 6,
+    "symbol": "GBAGA"
+  },
+  "parties": {
+    "service": "CptS4ujvxsFX4pqZB6XekRSqsDsyi6f1RgSEysLT9c1G",
+    "client": "31CCHqaMqkHnU22qTJdkerwb8FgZFcm3kH1RJPrDbhrz"
+  },
+  "guarantors": [],
+  "amounts": {
+    "price": "250000000000",
+    "serviceBond": "0",
+    "clientBond": "0",
+    "crankTip": "20000"
+  },
+  "rates": {
+    "guarantorFee": 0,
+    "serviceFaultShare": 5000,
+    "clientFaultShare": 5000,
+    "warrantyHold": 0
+  },
+  "windows": {
+    "funding": 604800,
+    "vote": 259200,
+    "contest": 172800,
+    "warranty": 0
+  },
+  "milestones": [
+    {
+      "id": "release",
+      "weight": 10000,
+      "deadline": 604800,
+      "release": "deadline",
+      "onMissed": "service-fault",
+      "checks": []
+    }
+  ],
+  "receipt": {
+    "format": "cnft",
+    "soulbound": true
+  },
+  "info": {
+    "title": "",
+    "deliverables": []
+  }
+}

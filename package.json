@@ -1,0 +1,24 @@
+{
+  "name": "solml-workspace",
+  "private": true,
+  "workspaces": [
+    "packages/compiler",
+    "packages/sdk",
+    "tools/receipt-minter"
+  ],
+  "scripts": {
+    "build": "npm run build -w @solml/compiler && npm run build -w @solml/sdk && npm run build -w @solml/receipt-minter",
+    "test": "npm test -w @solml/compiler && npm test -w @solml/sdk",
+    "build:program": "cargo-build-sbf --manifest-path programs/solml_escrow/Cargo.toml --sbf-out-dir target/deploy",
+    "test:program": "cargo test",
+    "fixtures": "node packages/compiler/dist/cli.js examples/token-launch.solml --sss examples/token-launch.sss --out programs/solml_escrow/tests/fixtures && node packages/compiler/dist/cli.js examples/hold.solml --out programs/solml_escrow/tests/fixtures"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "@types/node": "^22.10.0"
+  },
+  "overrides": {
+    "@metaplex-foundation/umi": "0.9.2",
+    "@metaplex-foundation/umi-bundle-defaults": "0.9.2"
+  }
+}

@@ -1,0 +1,10 @@
+<escrow id="Bad_ID" settle="USDC">
+  <meta name="guarantor" content="sharks" />
+  <service wallet="CptS4ujvxsFX4pqZB6XekRSqsDsyi6f1RgSEysLT9c1G" />
+  <client wallet="notakey" />
+  <deposit from="client" amount="10.1234567 USDC" />
+  <bond from="service" percent="5%" />
+  <milestone id="pool" weight="50%" deadline="10m">
+    <check mint="CxHuawS9A6mYLy4eVWPZZEdZ85pqwY5ZHtfSgDyqMPq2" pool="raydium" />
+  </milestone>
+</escrow>

@@ -1,0 +1,5 @@
+<!-- Plain timed transfer in a project token: released to "to" after 7 days. -->
+<hold id="pay-dev-0001" settle="mint:CxHuawS9A6mYLy4eVWPZZEdZ85pqwY5ZHtfSgDyqMPq2" decimals="6" symbol="GBAGA"
+      from="31CCHqaMqkHnU22qTJdkerwb8FgZFcm3kH1RJPrDbhrz"
+      to="CptS4ujvxsFX4pqZB6XekRSqsDsyi6f1RgSEysLT9c1G"
+      amount="250000 GBAGA" duration="7d" cluster="devnet" />
