@@ -78,10 +78,14 @@ function send(svm, ixs, signers) {
   tx.feePayer = signers[0].publicKey;
   tx.add(...ixs);
   tx.sign(...signers);
+  if (process.env.SOLML_TRACE) console.log("trace: send", ixs.map((i) => i.programId.toBase58().slice(0, 6) + ":" + i.data.length).join(","));
   const res = svm.sendTransaction(tx);
+  if (process.env.SOLML_TRACE) console.log("trace: sent", res instanceof TransactionMetadata ? "ok" : "failed");
   svm.expireBlockhash();
   if (!(res instanceof TransactionMetadata)) {
+    if (process.env.SOLML_TRACE) console.log("trace: reading failure");
     const logs = res.meta().logs();
+    if (process.env.SOLML_TRACE) console.log("trace: failure logs", logs.length, String(res.err()));
     const err = new Error(`tx failed: ${res.err()}\n${logs.join("\n")}`);
     err.logs = logs;
     throw err;

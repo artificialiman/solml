@@ -56,4 +56,4 @@ jobs:
       - name: Tests (compiler unit, SDK receipts, end-to-end on the SBF binary)
         env:
           RUST_BACKTRACE: "1"
-        run: npm test || (cd packages/sdk && node test/e2e.test.mjs; exit 1)
+        run: npm test || (cd packages/sdk && SOLML_TRACE=1 node test/e2e.test.mjs 2>&1 | grep -E 'trace|^ok|^not ok|bad_alloc|Subtest' | tail -25; exit 1)
