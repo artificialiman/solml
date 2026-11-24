@@ -32,7 +32,8 @@ const DAY = 86_400n;
 
 function world() {
   T("world: new LiteSVM");
-  const svm = new LiteSVM();
+  // No transaction history: the tests never look transactions up by signature.
+  const svm = new LiteSVM().withTransactionHistory(0n);
   T("world: created");
   const admin = Keypair.generate();
   svm.airdrop(admin.publicKey, 100_000_000_000n);
