@@ -9,13 +9,13 @@ SolML is a markup language for escrow contracts on Solana. A contract file compi
 
 ## The contract
 
-A timed transfer: the client's 250,000 GBAGA is held for 7 days, then released to the service.
+A timed transfer: the client's 250,000 GUIDING is held for 7 days, then released to the service.
 
 ```html
-<hold id="pay-dev-0001" settle="mint:CxHuawS9A6mYLy4eVWPZZEdZ85pqwY5ZHtfSgDyqMPq2" decimals="6" symbol="GBAGA"
+<hold id="pay-dev-0001" settle="mint:CxHuawS9A6mYLy4eVWPZZEdZ85pqwY5ZHtfSgDyqMPq2" decimals="6" symbol="GUIDING"
       from="31CCHqaMqkHnU22qTJdkerwb8FgZFcm3kH1RJPrDbhrz"
       to="CptS4ujvxsFX4pqZB6XekRSqsDsyi6f1RgSEysLT9c1G"
-      amount="250000 GBAGA" duration="7d" cluster="devnet" />
+      amount="250000 GUIDING" duration="7d" cluster="devnet" />
 ```
 
 A token launch (abridged from `examples/token-launch.solml`): 40% of the price pays out when three on-chain checks pass, 60% when two of three guarantors approve the airdrop, and 10% of every payout is held for a 30-day warranty.
@@ -52,8 +52,8 @@ milestone[id=airdrop] { on-deadline-missed: release; }
 | Output | What it is | `examples/hold.solml` | `examples/token-launch.solml` + `.sss` |
 | --- | --- | --- | --- |
 | IR | The resolved contract as canonical JSON: keys, integers, no prose ambiguity | `pay-dev-0001.ir.json` | `launch-0042.ir.json` |
-| Terms hash | SHA-256 of the canonical IR | `1e72f1b6…902337` | `10984c46…d2d619` |
-| Escrow address | `PDA(["escrow", terms_hash])`; any change to the terms moves it | `74WGSodF…F225FNqH` | `Atb83wXi…69kGnuN2ypUv` |
+| Terms hash | SHA-256 of the canonical IR | `6617dd08…24a2d7` | `969ff271…24ba75` |
+| Escrow address | `PDA(["escrow", terms_hash])`; any change to the terms moves it | `3dtauQX3…5ygaQEro` | `5RdcFM1S…Hgjjv9Xbn` |
 | Compact terms | Borsh bytes passed to `create_escrow` | 206 bytes | 437 bytes |
 
 Formatting, comments and attribute order never change the hash.

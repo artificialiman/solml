@@ -1,6 +1,6 @@
 <!-- Token launch with on-chain checks, one guarantor vote and a warranty hold. -->
 <escrow id="launch-0042" settle="USDC" cluster="devnet">
-  <meta name="title" content="Launch of $GBAGA: mint, pool, airdrop" />
+  <meta name="title" content="Launch of $GUIDING: mint, pool, airdrop" />
   <meta name="guarantor" content="wallet:HNsj5CmfrpJUnagwyPYEXA3AFrHc3pumiBVWExJWmCSc" />
   <meta name="guarantor" content="wallet:Dy29dmYPrLYnGkctQPt39x1aGicdHg4mN9TMK1bgejQ5" />
   <meta name="guarantor" content="wallet:5XXSejMtDvVydV6E4da8Ba4Sp7Eww8tTQsLvCeWAtnVi" />
@@ -11,7 +11,7 @@
   <deposit from="client" amount="20000 USDC" />
   <bond from="service" percent="20%" />
 
-  <deliverable>Mint 1,000,000,000 GBAGA with mint and freeze authority revoked.</deliverable>
+  <deliverable>Mint 1,000,000,000 GUIDING with mint and freeze authority revoked.</deliverable>
   <deliverable>Airdrop to the 5,000 wallets on the agreed list within 21 days.</deliverable>
 
   <milestone id="mint" weight="40%" deadline="7d">

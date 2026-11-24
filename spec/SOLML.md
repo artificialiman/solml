@@ -108,8 +108,8 @@ Reserved, rejected by the v1 compiler: `pool`, `lp`, `min-liquidity`, `distribut
 A timed transfer: the client's amount is released to `to` after `duration`.
 
 ```html
-<hold id="pay-dev-0001" settle="mint:<key>" decimals="6" symbol="GBAGA"
-      from="<client key>" to="<service key>" amount="250000 GBAGA" duration="7d" />
+<hold id="pay-dev-0001" settle="mint:<key>" decimals="6" symbol="GUIDING"
+      from="<client key>" to="<service key>" amount="250000 GUIDING" duration="7d" />
 ```
 
 Expands to one `<escrow>` with one `release="deadline"` milestone of weight 100% and both bonds at 0%. `<hold>` accepts only `<meta>`, `<deliverable>` and `<receipt>` children.
