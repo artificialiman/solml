@@ -11,17 +11,24 @@ const view = document.getElementById("view")!;
 const FILES = { contract: "contract.solml", sheet: "style.sss" } as const;
 type FileKey = keyof typeof FILES;
 
+// Drafts saved under older keys held the previous sample token name; they are dropped once.
+try {
+  for (const k of ["solml:contract", "solml:sheet"]) localStorage.removeItem(k);
+} catch {
+  /* storage unavailable */
+}
+
 const store = {
   get(k: string): string | null {
     try {
-      return localStorage.getItem(`solml:${k}`);
+      return localStorage.getItem(`solml:v2:${k}`);
     } catch {
       return null;
     }
   },
   set(k: string, v: string): void {
     try {
-      localStorage.setItem(`solml:${k}`, v);
+      localStorage.setItem(`solml:v2:${k}`, v);
     } catch {
       /* storage unavailable: drafts are kept in memory only */
     }
