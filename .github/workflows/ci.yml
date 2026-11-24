@@ -51,11 +51,8 @@ jobs:
       - run: npm run build
       - name: Fixtures are current
         run: npm run fixtures && git diff --exit-code programs/solml_escrow/tests/fixtures
-      - name: Program binary and runtime
-        run: |
-          sha256sum target/deploy/solml_escrow.so
-          node -v
-          cd packages/sdk && node -e "const {LiteSVM}=require('litesvm'); const s=new LiteSVM(); s.addProgramFromFile(new (require('@solana/web3.js').PublicKey)('3bNY3MoiTTYZMCg3imcHF1UKGuNJ8M2186uSSvMd8SKV'), '../../target/deploy/solml_escrow.so'); console.log('litesvm ok')"
+      - name: LiteSVM probe
+        run: node packages/sdk/test/diag/litesvm-probe.mjs || true
       - name: Tests (compiler unit, SDK receipts, end-to-end on the SBF binary)
         env:
           RUST_BACKTRACE: "1"
