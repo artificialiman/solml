@@ -1,0 +1,32 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+env:
+  AGAVE_VERSION: v2.3.13
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install Agave toolchain
+        run: |
+          sh -c "$(curl -sSfL https://release.anza.xyz/${AGAVE_VERSION}/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+      - name: Build SBF
+        run: cargo-build-sbf --manifest-path programs/solml_escrow/Cargo.toml --sbf-out-dir target/deploy
+      - name: Checksums
+        run: cd target/deploy && sha256sum solml_escrow.so > solml_escrow.so.sha256
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" target/deploy/solml_escrow.so target/deploy/solml_escrow.so.sha256 \
+            --title "$GITHUB_REF_NAME" --notes "Program ID 3bNY3MoiTTYZMCg3imcHF1UKGuNJ8M2186uSSvMd8SKV. Built with Agave ${AGAVE_VERSION}."

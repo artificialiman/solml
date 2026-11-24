@@ -4,10 +4,11 @@
   "workspaces": [
     "packages/compiler",
     "packages/sdk",
-    "tools/receipt-minter"
+    "tools/receipt-minter",
+    "apps/web"
   ],
   "scripts": {
-    "build": "npm run build -w @solml/compiler && npm run build -w @solml/sdk && npm run build -w @solml/receipt-minter",
+    "build": "npm run build -w @solml/compiler && npm run build -w @solml/sdk && npm run build -w @solml/receipt-minter && npm run build -w @solml/web",
     "test": "npm test -w @solml/compiler && npm test -w @solml/sdk",
     "build:program": "cargo-build-sbf --manifest-path programs/solml_escrow/Cargo.toml --sbf-out-dir target/deploy",
     "test:program": "cargo test",

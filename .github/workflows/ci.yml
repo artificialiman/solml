@@ -1,0 +1,55 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  AGAVE_VERSION: v2.3.13
+
+jobs:
+  program:
+    name: program (rust tests + sbf build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Install Agave toolchain
+        run: |
+          sh -c "$(curl -sSfL https://release.anza.xyz/${AGAVE_VERSION}/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+      - name: Rust tests (settlement math, TS→Rust conformance)
+        run: cargo test --locked
+      - name: Build SBF
+        run: cargo-build-sbf --manifest-path programs/solml_escrow/Cargo.toml --sbf-out-dir target/deploy
+      - uses: actions/upload-artifact@v4
+        with:
+          name: solml_escrow.so
+          path: target/deploy/solml_escrow.so
+
+  js:
+    name: compiler, sdk, web
+    needs: program
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/download-artifact@v4
+        with:
+          name: solml_escrow.so
+          path: target/deploy
+      - run: npm ci
+      - run: npm run build
+      - name: Fixtures are current
+        run: npm run fixtures && git diff --exit-code programs/solml_escrow/tests/fixtures
+      - name: Tests (compiler unit, SDK receipts, end-to-end on the SBF binary)
+        run: npm test

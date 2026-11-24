@@ -22,6 +22,7 @@ A declarative language for escrow contracts on Solana, and the program that enfo
 | `packages/sdk` | `@solml/sdk`: instruction builders, PDAs, account and event decoders, crank planner, receipt builder and verifier, `solml` CLI |
 | `programs/solml_escrow` | Anchor 0.32 program (Rust) |
 | `tools/receipt-minter` | Bubblegum V2 minter for soulbound receipts |
+| `apps/web` | Playground and spec reader (Vite, 51 KB gzipped). Deployed on Vercel from this folder |
 | `examples/` | `token-launch.solml` + `.sss`, `hold.solml`, `broken.solml` (every error class) |
 | `keys/` | Program deploy keypair (git-ignored) |
 
@@ -52,6 +53,7 @@ npm run test:program   # Rust: settlement math + TS→Rust byte conformance
 | Receipt minter | Type-checked against mpl-bubblegum 5.1 / mpl-core; not run against a cluster | Not run |
 | Devnet / mainnet | No deployment yet | Not run |
 | Security audit | None | Not done |
+| Web playground | Browser address derivation matched web3.js on 200 random terms hashes; desktop and phone screenshots reviewed | Pass |
 
 ## Transacting with a project token (devnet)
 
